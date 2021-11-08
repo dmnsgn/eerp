@@ -38,7 +38,23 @@ const i = eerp(a, b, t);
 
 <!-- api-start -->
 
-Auto-generated API content.
+<a name="module_eerp"></a>
+
+## eerp
+
+<a name="exp_module_eerp--eerp"></a>
+
+### eerp(a, b, t) ⇒ <code>number</code> ⏏
+
+Logarithmic/exponential interpolation
+
+**Kind**: Exported function
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| a     | <code>number</code> | Start       |
+| b     | <code>number</code> | End         |
+| t     | <code>number</code> | Interpolant |
 
 <!-- api-end -->
 
