@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>eerp by Damien Seguin (https://github.com/dmnsgn)</title>
+    <style>
+      :root {
+        --color-dark: #404040;
+        --color-light: #f2f2f2;
+        --color-accent: #fd5e62;
+      }
+
+      body {
+        margin: 0;
+        overscroll-behavior: none;
+        font-family: sans-serif;
+        color: var(--color-light);
+        background-color: var(--color-dark);
+      }
+
+      main {
+        padding: 0 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>eerp</h1>
+    </main>
+    <script async src="web_modules/es-module-shims.js"></script>
+    <script src="web_modules/import-map.json" type="importmap"></script>
+
+    <script type="module">
+      import eerp from "./index.js";
+
+      import createCanvasContext from "canvas-context";
+      import { Pane } from "tweakpane";
+
+      const CONFIG = {
+        increment: 0.015,
+        start: 0.001,
+      };
+
+      const width = 1200;
+      const height = 1200;
+      const margin = 75;
+      const graphWidth = width - margin * 2;
+      const graphHeight = height - margin * 2;
+
+      const { context, canvas } = createCanvasContext("2d", {
+        width,
+        height,
+      });
+      canvas.style.width = `${width / window.devicePixelRatio}px`;
+      canvas.style.height = `${height / window.devicePixelRatio}px`;
+      document.querySelector("main").appendChild(canvas);
+
+      function lerp(v0, v1, t) {
+        return v0 * (1 - t) + v1 * t;
+      }
+
+      const drawLine = (context, x1, y1, x2, y2, w = 1) => {
+        context.save();
+        context.lineWidth = w;
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.stroke();
+        context.closePath();
+        context.restore();
+      };
+
+      const drawDisk = (context, x, y, r) => {
+        context.beginPath();
+        context.arc(x, y, r, 0, 2 * Math.PI);
+        context.fill();
+        context.closePath();
+      };
+
+      const drawText = (context, text, x, y, props = {}) => {
+        context.save();
+        Object.assign(context, props);
+        context.scale(1, -1);
+        context.fillText(text, x, -y);
+        context.restore();
+      };
+
+      const draw = () => {
+        const now = Date.now() * 0.005;
+
+        // Clear
+        context.fillStyle = window
+          .getComputedStyle(document.documentElement)
+          .getPropertyValue("--color-light");
+        context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
+        // Draw
+        context.save();
+        context.translate(margin, height - margin);
+        context.scale(1, -1);
+        context.fillStyle = window
+          .getComputedStyle(document.documentElement)
+          .getPropertyValue("--color-dark");
+        context.font = "16px sans-serif";
+
+        drawLine(context, 0, 0, graphWidth, 0, graphWidth * 0.005);
+        drawLine(context, 0, 0, 0, graphHeight, graphWidth * 0.005);
+
+        const end = 1;
+        const delta = end - CONFIG.start;
+
+        // Ticks
+        for (let x = 0; x <= 1 + Number.EPSILON; x += 0.05) {
+          const offset = graphWidth * 0.02;
+          const a = x * graphWidth;
+          const text = x.toFixed(2);
+          drawLine(context, a, -offset * 0.5, a, 0, graphWidth * 0.002);
+          drawText(context, text, a, -offset, {
+            textBaseline: "top",
+            textAlign: "center",
+          });
+          drawLine(context, -offset * 0.5, a, 0, a, graphWidth * 0.002);
+          drawText(context, text, -offset, a, {
+            textBaseline: "middle",
+            textAlign: "right",
+          });
+        }
+
+        // lerp
+        for (let x = CONFIG.start; x <= end; x += CONFIG.increment) {
+          const y = lerp(CONFIG.start, end, x);
+
+          drawLine(
+            context,
+            x * graphWidth,
+            y * graphHeight,
+            x * graphWidth,
+            0,
+            graphWidth * 0.0005
+          );
+
+          drawDisk(
+            context,
+            x * graphWidth,
+            y * graphHeight,
+            graphWidth * 0.003
+          );
+
+          drawText(
+            context,
+            y.toFixed(2),
+            x * graphWidth,
+            y * graphHeight + graphHeight * 0.01,
+            {
+              textBaseline: "bottom",
+              textAlign: "center",
+            }
+          );
+        }
+
+        // eerp
+        context.strokeStyle = context.fillStyle = window
+          .getComputedStyle(document.documentElement)
+          .getPropertyValue("--color-accent");
+
+        for (let x = CONFIG.start; x <= end; x += CONFIG.increment) {
+          const y = eerp(CONFIG.start, end, x);
+
+          drawLine(
+            context,
+            x * graphWidth,
+            y * graphHeight,
+            0,
+            y * graphHeight,
+            graphWidth * 0.002
+          );
+
+          drawDisk(
+            context,
+            x * graphWidth,
+            y * graphHeight,
+            graphWidth * 0.004
+          );
+
+          drawText(
+            context,
+            y.toFixed(2),
+            x * graphWidth + graphWidth * 0.01,
+            y * graphHeight,
+            {
+              textBaseline: "middle",
+              textAlign: "left",
+            }
+          );
+        }
+
+        context.restore();
+      };
+      draw();
+
+      const pane = new Pane();
+      pane
+        .addInput(CONFIG, "increment", {
+          step: 0.001,
+          min: 0.005,
+          max: 0.5,
+        })
+        .on("change", () => draw());
+      pane
+        .addInput(CONFIG, "start", {
+          min: 0.001,
+          max: 1,
+        })
+        .on("change", () => draw());
+    </script>
+  </body>
+</html>
