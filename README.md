@@ -18,7 +18,7 @@ Logarithmic/exponential interpolation.
 
 Based on [Freya Holmér naming](https://twitter.com/FreyaHolmer/status/1068293398073929728) and [Scott Lembcke' Logarithmic Interpolation](https://www.gamedeveloper.com/programming/logarithmic-interpolation).
 
-![](https://raw.githubusercontent.com/dmnsgn/eerp/main/screenshot.gif)
+![](https://raw.githubusercontent.com/dmnsgn/eerp/main/screenshot.png)
 
 ## Installation
 
