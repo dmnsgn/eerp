@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/eerp)](https://www.npmjs.com/package/eerp)
 [![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)](https://www.npmjs.com/package/eerp)
-[![npm minzipped size](https://img.shields.io/bundlephobia/minzip/eerp)](https://www.npmjs.com/package/eerp)
+[![npm minzipped size](https://img.shields.io/bundlephobia/minzip/eerp)](https://bundlephobia.com/package/eerp)
 [![dependencies](https://img.shields.io/librariesio/release/npm/eerp)](https://github.com/dmnsgn/eerp/blob/main/package.json)
 [![types](https://img.shields.io/npm/types/eerp)](https://github.com/microsoft/TypeScript)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-fa6673.svg)](https://conventionalcommits.org)
