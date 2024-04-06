@@ -1,6 +1,4 @@
-/**
- * @module eerp
- */
+/** @module eerp */
 
 /**
  * Logarithmic/exponential interpolation

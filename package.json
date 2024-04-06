@@ -31,13 +31,12 @@
   "main": "index.js",
   "types": "types/index.d.ts",
   "devDependencies": {
-    "canvas-context": "^3.1.0",
-    "core-js": "^3.19.1",
-    "es-module-shims": "^0.12.8",
-    "tweakpane": "^3.0.5"
+    "canvas-context": "^3.2.0",
+    "es-module-shims": "^1.9.0",
+    "tweakpane": "^4.0.3"
   },
   "engines": {
-    "node": ">=16.0.0",
-    "npm": ">=7.0.0"
+    "node": ">=20.0.0",
+    "npm": ">=9.6.4"
   }
 }

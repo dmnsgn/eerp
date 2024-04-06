@@ -29,10 +29,10 @@
     <main>
       <h1>eerp</h1>
     </main>
-    <script async src="web_modules/es-module-shims.js"></script>
-    <script src="web_modules/import-map.json" type="importmap"></script>
+    <script async src="web_modules/es-module-shims.js" type="module"></script>
+    <script src="web_modules/import-map.json" type="importmap-shim"></script>
 
-    <script type="module">
+    <script type="module-shim">
       import eerp from "./index.js";
 
       import createCanvasContext from "canvas-context";
@@ -202,14 +202,14 @@
 
       const pane = new Pane();
       pane
-        .addInput(CONFIG, "increment", {
+        .addBinding(CONFIG, "increment", {
           step: 0.001,
           min: 0.005,
           max: 0.5,
         })
         .on("change", () => draw());
       pane
-        .addInput(CONFIG, "start", {
+        .addBinding(CONFIG, "start", {
           min: 0.001,
           max: 1,
         })
