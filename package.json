@@ -1,6 +1,6 @@
 {
   "name": "eerp",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Logarithmic/exponential interpolation.",
   "keywords": [
     "logarithmic",
@@ -12,7 +12,10 @@
   ],
   "homepage": "https://github.com/dmnsgn/eerp",
   "bugs": "https://github.com/dmnsgn/eerp/issues",
-  "repository": "dmnsgn/eerp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmnsgn/eerp.git"
+  },
   "funding": [
     {
       "type": "individual",
