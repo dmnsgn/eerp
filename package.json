@@ -32,8 +32,8 @@
   "types": "types/index.d.ts",
   "devDependencies": {
     "canvas-context": "^3.2.0",
-    "es-module-shims": "^1.9.0",
-    "tweakpane": "^4.0.3"
+    "es-module-shims": "^1.10.0",
+    "tweakpane": "^4.0.4"
   },
   "engines": {
     "node": ">=20.0.0",
